@@ -22,8 +22,8 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="846">
-                <caret line="134" column="3" lean-forward="true" selection-start-line="134" selection-start-column="3" selection-end-line="134" selection-end-column="3" />
+              <first_editor relative-caret-position="202">
+                <caret line="110" column="20" lean-forward="true" selection-start-line="110" selection-start-column="20" selection-end-line="110" selection-end-column="20" />
                 <folding />
               </first_editor>
               <second_editor />
@@ -34,8 +34,8 @@
       <file leaf-file-name="openshift-activemq.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/configuration/openshift-activemq.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2322">
-              <caret line="27" column="63" lean-forward="true" selection-start-line="27" selection-start-column="63" selection-end-line="27" selection-end-column="63" />
+            <state relative-caret-position="288">
+              <caret line="46" column="33" lean-forward="false" selection-start-line="46" selection-start-column="33" selection-end-line="46" selection-end-column="49" />
               <folding />
             </state>
           </provider>
@@ -405,7 +405,14 @@
       <option name="project" value="LOCAL" />
       <updated>1489152333485</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Update Readme">
+      <created>1489152622048</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1489152622048</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -449,7 +456,8 @@
     <MESSAGE value="Update" />
     <MESSAGE value="Update openshift-activemq.xml" />
     <MESSAGE value="Update host on openshift-activemq.xml" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update host on openshift-activemq.xml" />
+    <MESSAGE value="Update Readme" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update Readme" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -493,8 +501,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/configuration/openshift-activemq.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2322">
-          <caret line="27" column="63" lean-forward="true" selection-start-line="27" selection-start-column="63" selection-end-line="27" selection-end-column="63" />
+        <state relative-caret-position="288">
+          <caret line="46" column="33" lean-forward="false" selection-start-line="46" selection-start-column="33" selection-end-line="46" selection-end-column="49" />
           <folding />
         </state>
       </provider>
@@ -502,8 +510,8 @@
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="846">
-            <caret line="134" column="3" lean-forward="true" selection-start-line="134" selection-start-column="3" selection-end-line="134" selection-end-column="3" />
+          <first_editor relative-caret-position="202">
+            <caret line="110" column="20" lean-forward="true" selection-start-line="110" selection-start-column="20" selection-end-line="110" selection-end-column="20" />
             <folding />
           </first_editor>
           <second_editor />
