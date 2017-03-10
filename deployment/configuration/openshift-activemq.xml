@@ -43,6 +43,11 @@
 
         <!-- ##### DESTINATIONS ##### -->
 
+        <destinations>
+            <queue physicalName="USERS.TEST.QUEUE" />
+            <queue physicalName="USERS.PROD.QUEUE" />
+        </destinations>
+
         <destinationPolicy>
             <policyMap>
                 <policyEntries>
