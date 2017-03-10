@@ -87,6 +87,7 @@ template "amq62-basic-s2i" created
 ###create the service account "amq-service-account"
 ```
 oc create -f https://raw.githubusercontent.com/abouchama/amq62-basic-s2i/master/amq-service-account.json
+serviceaccount "amq-service-account" created
 ```
 
 ###ensure the service account is added to the namespace for view permissions... (for pod scaling)

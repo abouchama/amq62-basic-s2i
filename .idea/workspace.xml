@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="1a4b18ab-a80f-48a8-871a-f8a9d1dab7a9" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/configuration/openshift-activemq.xml" afterPath="$PROJECT_DIR$/configuration/openshift-activemq.xml" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -22,8 +23,8 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="792">
-                <caret line="118" column="43" lean-forward="true" selection-start-line="118" selection-start-column="43" selection-end-line="118" selection-end-column="43" />
+              <first_editor relative-caret-position="346">
+                <caret line="99" column="2" lean-forward="false" selection-start-line="99" selection-start-column="2" selection-end-line="99" selection-end-column="48" />
                 <folding />
               </first_editor>
               <second_editor />
@@ -34,8 +35,8 @@
       <file leaf-file-name="openshift-activemq.xml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/configuration/openshift-activemq.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="432">
-              <caret line="36" column="11" lean-forward="true" selection-start-line="36" selection-start-column="11" selection-end-line="36" selection-end-column="11" />
+            <state relative-caret-position="-1890">
+              <caret line="27" column="63" lean-forward="true" selection-start-line="27" selection-start-column="63" selection-end-line="27" selection-end-column="63" />
               <folding />
             </state>
           </provider>
@@ -391,7 +392,14 @@
       <option name="project" value="LOCAL" />
       <updated>1489151298868</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Update openshift-activemq.xml">
+      <created>1489151777894</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1489151777894</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -433,7 +441,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Adding amq service account" />
     <MESSAGE value="Update" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update" />
+    <MESSAGE value="Update openshift-activemq.xml" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update openshift-activemq.xml" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -478,8 +487,8 @@
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="792">
-            <caret line="118" column="43" lean-forward="true" selection-start-line="118" selection-start-column="43" selection-end-line="118" selection-end-column="43" />
+          <first_editor relative-caret-position="346">
+            <caret line="99" column="2" lean-forward="false" selection-start-line="99" selection-start-column="2" selection-end-line="99" selection-end-column="48" />
             <folding />
           </first_editor>
           <second_editor />
@@ -488,8 +497,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/configuration/openshift-activemq.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="36" column="11" lean-forward="true" selection-start-line="36" selection-start-column="11" selection-end-line="36" selection-end-column="11" />
+        <state relative-caret-position="-1890">
+          <caret line="27" column="63" lean-forward="true" selection-start-line="27" selection-start-column="63" selection-end-line="27" selection-end-column="63" />
           <folding />
         </state>
       </provider>

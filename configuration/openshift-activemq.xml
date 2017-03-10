@@ -134,12 +134,14 @@
                 (i.e. messageTTL="-1") but create demand subscription only to the next connected
                 broker (i.e. consumerTTL="1"). See AMQ-4607.
             -->
-            <networkConnector name="queueNetworkConnector" userName="admin" password="sunflower" uri="kube://il3-broker-tcp:61616/?transportType=tcp" messageTTL="-1" consumerTTL="1" conduitSubscriptions="false">
+            <networkConnector name="queueNetworkConnector" userName="admin" password="sunflower" uri="kube://broker-amq-tcp:61616/?transportType=tcp" messageTTL="-1" consumerTTL="1" conduitSubscriptions="false">
+            <!--networkConnector name="queueNetworkConnector" userName="admin" password="sunflower" uri="kube://il3-broker-tcp:61616/?transportType=tcp" messageTTL="-1" consumerTTL="1" conduitSubscriptions="false"-->
                 <dynamicallyIncludedDestinations>
                     <queue physicalName=">" />
                 </dynamicallyIncludedDestinations>
             </networkConnector>
-            <networkConnector name="topicNetworkConnector" userName="admin" password="sunflower" uri="kube://il3-broker-tcp:61616/?transportType=tcp" messageTTL="-1" consumerTTL="1" conduitSubscriptions="true">
+            <networkConnector name="topicNetworkConnector" userName="admin" password="sunflower" uri="kube://broker-amq-tcp:61616/?transportType=tcp" messageTTL="-1" consumerTTL="1" conduitSubscriptions="true">
+            <!--networkConnector name="topicNetworkConnector" userName="admin" password="sunflower" uri="kube://il3-broker-tcp:61616/?transportType=tcp" messageTTL="-1" consumerTTL="1" conduitSubscriptions="true"-->
                 <dynamicallyIncludedDestinations>
                     <topic physicalName=">" />
                 </dynamicallyIncludedDestinations>
