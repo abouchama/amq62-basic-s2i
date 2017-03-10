@@ -134,9 +134,7 @@ $ git push -u origin master
 $ oc start-build amq62-basic-s2i -n broker
 build "amq62-basic-s2i-2" started
 
-$ oc get pods -w
-NAME                      READY     STATUS      RESTARTS   AGE
-amq62-basic-s2i-1-build   0/1       Completed   0          17m
-amq62-basic-s2i-2-build   0/1       Completed   0          10s
-broker-amq-a-1-ufsge      1/1       Running     0          15m
+$ oc deploy broker-amq-a --latest -n broker
+Started deployment #2
+Use 'oc logs -f dc/broker-amq-a' to track its progress.
 ```
