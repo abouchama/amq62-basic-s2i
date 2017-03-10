@@ -121,3 +121,15 @@ $ oc new-app --template="broker/amq62-basic-s2i"
 --> Success
     Run 'oc status' to view your app.
 ```
+###Update of openshift-activemq.xml
+
+You should setup the GitHub webhook URL in order to trigger a new build after each update.
+
+You can also do it manually, like following:
+```
+$ git commit -am "changing my activemq conf"
+
+$ git push -u origin master
+
+$ oc start-build amq62-basic-s2i -n broker
+```
