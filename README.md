@@ -1,6 +1,6 @@
-# Demo of JBoss A-MQ (ActiveMQ) on OpenShift using S2I
+# Example of JBoss A-MQ (ActiveMQ) on OpenShift using S2I
 
-Configuration of the JBoss A-MQ image can also be modified using the S2I ()Source-to-image) feature.
+Configuration of the JBoss A-MQ image can also be modified using the S2I (Source-to-image) feature.
 
 Custom A-MQ broker configuration can be specified by creating an openshift-activemq.xml file inside 
 the git directory of your application’s Git project root. On each commit, 
