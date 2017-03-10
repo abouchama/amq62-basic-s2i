@@ -1,0 +1,193 @@
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one or more
+    contributor license agreements.  See the NOTICE file distributed with
+    this work for additional information regarding copyright ownership.
+    The ASF licenses this file to You under the Apache License, Version 2.0
+    (the "License"); you may not use this file except in compliance with
+    the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd">
+
+    <!-- Allows us to use system properties as variables in this configuration file -->
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <value>file:${activemq.conf}/credentials.properties</value>
+        </property>
+        <property name="ignoreResourceNotFound" value="true" />
+        <property name="searchSystemEnvironment" value="true" />
+        <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
+    </bean>
+
+        <!-- Allows accessing the server log -->
+<!--     <bean id="logQuery" class="io.fabric8.insight.log.log4j.Log4jLogQuery"
+          lazy-init="false" scope="singleton"
+          init-method="start" destroy-method="stop">
+    </bean>
+ -->
+    <!--
+        The <broker> element is used to configure the ActiveMQ broker.
+    -->
+    <broker xmlns="http://activemq.apache.org/schema/core" brokerName="${HOSTNAME}" dataDirectory="${activemq.data}" schedulePeriodForDestinationPurge="10000">
+
+        <!-- ##### DESTINATIONS ##### -->
+
+        <destinationPolicy>
+            <policyMap>
+                <policyEntries>
+                    <policyEntry queue=">" producerFlowControl="true" memoryLimit="2 mb" maxBrowsePageSize="700" useCache="false">
+                        <!--
+                            Allow messages to be replayed back to original broker if there is demand.
+                            (replayWhenNoConsumers="true").
+                            Due to ENTMQ-444 you also want to configure a replayDelay that is high enough so that
+                            any outstanding message acks are passed along the network bridge *before* we start
+                            to replay messages (replayDelay="500"). The value of replayDelay is a bit of a guess but
+                            on a decently fast network 500 msecs should be enough to pass on and process all message acks.
+
+                            Note: JMS clients that use the failover transport to connect to a broker in the mesh
+                            arbitrarily should consider using an initialReconnectDelay on the failover url that is
+                            higher than replayDelay configured in the broker. E.g.
+                            "failover:(tcp://brokerA:61616,tcp://brokerB:61616)?randomize=true&initialReconnectDelay=700"
+                            This ensures that the demand subscription for this reconnecting consumer is only created
+                            after replayDelay has elapsed.
+                            If its created before, it may lead to the remote broker skipping message dispatch
+                            to the remote broker and those message would seem to be stuck on the broker despite a consumer
+                            being connected via a networked broker.
+                            See ENTMQ-538 for more details.
+                        -->
+                        <networkBridgeFilterFactory>
+                            <conditionalNetworkBridgeFilterFactory replayWhenNoConsumers="true" replayDelay="500" />
+                        </networkBridgeFilterFactory>
+                    </policyEntry>
+                    <policyEntry topic=">" producerFlowControl="true">
+                        <!--
+                            The constantPendingMessageLimitStrategy is used to prevent
+                            slow topic consumers to block producers and affect other consumers
+                            by limiting the number of messages that are retained
+                            For more information, see:
+
+                            http://activemq.apache.org/slow-consumer-handling.html
+                        -->
+                        <pendingMessageLimitStrategy>
+                            <constantPendingMessageLimitStrategy limit="1000" />
+                        </pendingMessageLimitStrategy>
+                    </policyEntry>
+                    <!--
+                    Remove unused empty queues if they are empty longer than 30 seconds
+                    -->
+                    <policyEntry queue=">" gcInactiveDestinations="true" inactiveTimoutBeforeGC="30000"/>
+                </policyEntries>
+            </policyMap>
+        </destinationPolicy>
+
+
+        <destinationInterceptors><virtualDestinationInterceptor> <virtualDestinations> <virtualTopic name="*.>" prefix="*." postfix=".>" selectorAware="true"/> <compositeTopic name="ng_physicalDealEvent.v1.topic.any.any.d1"> <forwardTo> <topic physicalName="ng_physicalDealEvent.v1.topic.any.any.d2"/> <queue physicalName="queue.ng_physicalDealEvent.v1.topic.any.any.d3.goil.ngde.physicalDeal.pub.main.d3"/> <queue physicalName="queue.ng_physicalDealEvent.v1.topic.any.any.d4.goil.ngde.physicalDeal.pub.main.d4"/> </forwardTo> </compositeTopic> <compositeTopic name="ng_partialDealEvent.v1.topic.any.any.d1"> <forwardTo> <queue physicalName="queue.ng_partialDealEvent.v1.topic.any.any.d2.goil.ngde.physicalDeal.pub.main.d2"/> <queue physicalName="queue.ng_partialDealEvent.v1.topic.any.any.d3.goil.ngde.physicalDeal.pub.main.d3"/> <queue physicalName="queue.ng_partialDealEvent.v1.topic.any.any.d4.goil.ngde.physicalDeal.pub.main.d4"/> </forwardTo> </compositeTopic> </virtualDestinations> </virtualDestinationInterceptor> </destinationInterceptors>
+
+
+        <!--
+            The managementContext is used to configure how ActiveMQ is exposed in
+            JMX. By default, ActiveMQ uses the MBean server that is started by
+            the JVM. For more information, see:
+
+            http://activemq.apache.org/jmx.html
+        -->
+        <managementContext>
+            <managementContext createConnector="false" />
+        </managementContext>
+
+        <networkConnectors>
+            <!--
+                In a full mesh we want messages to travel freely to any broker
+                (i.e. messageTTL="-1") but create demand subscription only to the next connected
+                broker (i.e. consumerTTL="1"). See AMQ-4607.
+            -->
+            <networkConnector name="queueNetworkConnector" userName="admin" password="sunflower" uri="kube://il3-broker-tcp:61616/?transportType=tcp" messageTTL="-1" consumerTTL="1" conduitSubscriptions="false"><dynamicallyIncludedDestinations><queue physicalName=">" /></dynamicallyIncludedDestinations></networkConnector><networkConnector name="topicNetworkConnector" userName="admin" password="sunflower" uri="kube://il3-broker-tcp:61616/?transportType=tcp" messageTTL="-1" consumerTTL="1" conduitSubscriptions="true"><dynamicallyIncludedDestinations><topic physicalName=">" /></dynamicallyIncludedDestinations></networkConnector>
+        </networkConnectors>
+
+        <!--
+            Configure message persistence for the broker. The default persistence
+            mechanism is the KahaDB store (identified by the kahaDB tag).
+            For more information, see:
+
+            http://activemq.apache.org/persistence.html
+        -->
+
+        <persistenceAdapter><mKahaDB directory="${activemq.data}/mkahadb"><filteredPersistenceAdapters><filteredKahaDB perDestination="true"><persistenceAdapter><kahaDB journalMaxFileLength="16 mb" enableJournalDiskSyncs="true" checkForCorruptJournalFiles="true"/></persistenceAdapter></filteredKahaDB></filteredPersistenceAdapters></mKahaDB></persistenceAdapter>
+
+        <plugins>
+            <jaasAuthenticationPlugin configuration="activemq-ldap" /><authorizationPlugin><map><cachedLDAPAuthorizationMap connectionURL="ldaps://il3-broker-ldaps-service:636" connectionUsername="cn=Manager,dc=bp,dc=com" connectionPassword="secret" queueSearchBase="ou=Queue,ou=Destination,ou=ActiveMQ,dc=activemq,dc=bp,dc=com" topicSearchBase="ou=Topic,ou=Destination,ou=ActiveMQ,dc=activemq,dc=bp,dc=com" tempSearchBase="ou=Temp,ou=Destination,ou=ActiveMQ,dc=activemq,dc=bp,dc=com" refreshInterval="300000" legacyGroupMapping="false"/></map></authorizationPlugin>
+
+            <virtualSelectorCacheBrokerPlugin persistFile="${activemq.data}/selectorCache" persistInterval="900" />
+        </plugins>
+
+        <!--
+            The systemUsage controls the maximum amount of space the broker will
+            use before disabling caching and/or slowing down producers.
+            For more information, see:
+
+            http://activemq.apache.org/producer-flow-control.html
+        -->
+        <systemUsage>
+            <systemUsage>
+                <memoryUsage>
+                    <memoryUsage percentOfJvmHeap="70" />
+                </memoryUsage>
+                <storeUsage>
+                    <storeUsage limit="650 mb" />
+                </storeUsage>
+                <tempUsage>
+                    <tempUsage limit="350 mb" />
+                </tempUsage>
+            </systemUsage>
+        </systemUsage>
+
+        <!--
+            The transport connectors expose ActiveMQ over a given protocol to
+            clients and other brokers. For more information, see:
+
+            http://activemq.apache.org/configuring-transports.html
+        -->
+        <transportConnectors>
+            <transportConnector name="openwire" uri="tcp://0.0.0.0:61616?maximumConnections=2500&amp;wireFormat.maxFrameSize=104857600" />
+            <transportConnector name="ssl" uri="ssl://0.0.0.0:61617?maximumConnections=2500&amp;wireFormat.maxFrameSize=104857600" />
+        </transportConnectors>
+
+        <sslContext>
+            <sslContext keyStore="file:/etc/amq-secret-volume/broker.ks"
+                        keyStorePassword="password"
+                        trustStore="file:/etc/amq-secret-volume/broker.ts"
+                        trustStorePassword="password" />
+        </sslContext>
+
+        <!-- destroy the spring context on shutdown to stop jetty -->
+        <shutdownHooks>
+            <bean xmlns="http://www.springframework.org/schema/beans" class="org.apache.activemq.hooks.SpringContextHook" />
+        </shutdownHooks>
+
+    </broker>
+
+    <!--
+        Enable web consoles, REST and Ajax APIs and demos
+        The web consoles requires by default login, you can disable this in the jetty.xml file
+
+        Take a look at ${ACTIVEMQ_HOME}/conf/jetty.xml for more details
+    -->
+    <!-- Do not expose the console or other webapps
+    <import resource="jetty.xml" />
+    -->
+
+    <!-- ##### DATASOURCE_BEAN ##### -->
+
+
+</beans>
