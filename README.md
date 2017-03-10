@@ -7,12 +7,15 @@ Custom A-MQ broker configuration can be specified by creating an openshift-activ
 the git directory of your application’s Git project root. On each commit, 
 the file will be copied to the conf directory in the A-MQ root and its contents used to configure the broker.
 
-Create new project (namespace) called Broker:
+###Create new project (namespace) called Broker:
 
+```
 oc new-project broker
+```
 
-S2I Build OpenShift:
+###S2I Build OpenShift:
 
+```
 oc new-build registry.access.redhat.com/jboss-amq-6/amq62-openshift:1.3~https://github.com/abouchama/amq62-basic-s2i.git
 --> Found Docker image 884d69b (6 weeks old) from registry.access.redhat.com for "registry.access.redhat.com/jboss-amq-6/amq62-openshift:1.3"
 
@@ -34,7 +37,10 @@ oc new-build registry.access.redhat.com/jboss-amq-6/amq62-openshift:1.3~https://
 --> Success
     Build configuration "amq62-basic-s2i" created and build triggered.
     Run 'oc logs -f bc/amq62-basic-s2i' to stream the build progress.
+```
+To stream the build progress, run 'oc logs -f bc/amq62-basic-s2i':
 
+```
 $ oc logs -f bc/amq62-basic-s2i
 Cloning "https://github.com/abouchama/amq62-basic-s2i.git" ...
 	Commit:	b4f9e885a2126a0ab91f1356fae104c4c490de6a (add configuration)
@@ -55,27 +61,39 @@ Pushed 5/7 layers, 87% complete
 Pushed 6/7 layers, 94% complete
 Pushed 7/7 layers, 100% complete
 Push successful
+```
+Let's get now, our image stream:
 
+```
 $ oc get is
 NAME              DOCKER REPO                                 TAGS      UPDATED
 amq62-basic-s2i   172.30.34.183:5000/broker/amq62-basic-s2i   latest    15 minutes ago
 amq62-openshift   172.30.34.183:5000/broker/amq62-openshift   1.3       15 minutes ago
+```
 
-Change the image on the template "template-amq62-basic-s2i.json", like following:
+Now, you have to change the image steam on the template "template-amq62-basic-s2i.json", like following:
 
+```
 "image": "172.30.34.183:5000/broker/amq62-basic-s2i"
+```
 
-#create the template in the namespace
+###create the template in the namespace
+```
 $ oc create -n broker -f template-amq62-basic-s2i.json 
 template "amq62-basic-s2i" created
-
+```
 #create the service account "amq-service-account"
+```
 oc create -f https://gist.githubusercontent.com/welshstew/08daeeef046aeb3ceb9b8b39c9e0d243/raw/1c9535126b57ab7c8adc4ae0859583c20c25eca9/amq-service-account.json
+```
 
 #ensure the service account is added to the namespace for view permissions... (for pod scaling)
+```
 oc policy add-role-to-user view system:serviceaccount:broker:amq-service-account
+```
 
 #use the template in the namespace then to create your app (3 broker mesh)
+```
 $ oc new-app --template="broker/amq62-basic-s2i"
 --> Deploying template amq62-basic-s2i for "broker/amq62-basic-s2i"
 
@@ -99,3 +117,4 @@ $ oc new-app --template="broker/amq62-basic-s2i"
     deploymentconfig "broker-amq-a" created
 --> Success
     Run 'oc status' to view your app.
+```
