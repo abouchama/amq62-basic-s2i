@@ -82,17 +82,17 @@ Now, you have to change the image steam on the template "template-amq62-basic-s2
 $ oc create -n broker -f template-amq62-basic-s2i.json 
 template "amq62-basic-s2i" created
 ```
-#create the service account "amq-service-account"
+###create the service account "amq-service-account"
 ```
 oc create -f https://gist.githubusercontent.com/welshstew/08daeeef046aeb3ceb9b8b39c9e0d243/raw/1c9535126b57ab7c8adc4ae0859583c20c25eca9/amq-service-account.json
 ```
 
-#ensure the service account is added to the namespace for view permissions... (for pod scaling)
+###ensure the service account is added to the namespace for view permissions... (for pod scaling)
 ```
 oc policy add-role-to-user view system:serviceaccount:broker:amq-service-account
 ```
 
-#use the template in the namespace then to create your app (3 broker mesh)
+###use the template in the namespace then to create your Broker:
 ```
 $ oc new-app --template="broker/amq62-basic-s2i"
 --> Deploying template amq62-basic-s2i for "broker/amq62-basic-s2i"
