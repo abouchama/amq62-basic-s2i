@@ -97,7 +97,24 @@
         </destinationPolicy>
 
 
-        <destinationInterceptors><virtualDestinationInterceptor> <virtualDestinations> <virtualTopic name="*.>" prefix="*." postfix=".>" selectorAware="true"/> <compositeTopic name="ng_physicalDealEvent.v1.topic.any.any.d1"> <forwardTo> <topic physicalName="ng_physicalDealEvent.v1.topic.any.any.d2"/> <queue physicalName="queue.ng_physicalDealEvent.v1.topic.any.any.d3.goil.ngde.physicalDeal.pub.main.d3"/> <queue physicalName="queue.ng_physicalDealEvent.v1.topic.any.any.d4.goil.ngde.physicalDeal.pub.main.d4"/> </forwardTo> </compositeTopic> <compositeTopic name="ng_partialDealEvent.v1.topic.any.any.d1"> <forwardTo> <queue physicalName="queue.ng_partialDealEvent.v1.topic.any.any.d2.goil.ngde.physicalDeal.pub.main.d2"/> <queue physicalName="queue.ng_partialDealEvent.v1.topic.any.any.d3.goil.ngde.physicalDeal.pub.main.d3"/> <queue physicalName="queue.ng_partialDealEvent.v1.topic.any.any.d4.goil.ngde.physicalDeal.pub.main.d4"/> </forwardTo> </compositeTopic> </virtualDestinations> </virtualDestinationInterceptor> </destinationInterceptors>
+        <destinationInterceptors>
+            <virtualDestinationInterceptor>
+                <virtualDestinations>
+                    <virtualTopic name="*.>" prefix="*." postfix=".>" selectorAware="true"/>
+                    <compositeTopic name="ng_physicalDealEvent.v1.topic.any.any.d1">
+                        <forwardTo> <topic physicalName="ng_physicalDealEvent.v1.topic.any.any.d2"/>
+                            <queue physicalName="queue.ng_physicalDealEvent.v1.topic.any.any.d3.goil.ngde.physicalDeal.pub.main.d3"/>
+                            <queue physicalName="queue.ng_physicalDealEvent.v1.topic.any.any.d4.goil.ngde.physicalDeal.pub.main.d4"/>
+                        </forwardTo> </compositeTopic> <compositeTopic name="ng_partialDealEvent.v1.topic.any.any.d1">
+                    <forwardTo>
+                        <queue physicalName="queue.ng_partialDealEvent.v1.topic.any.any.d2.goil.ngde.physicalDeal.pub.main.d2"/>
+                        <queue physicalName="queue.ng_partialDealEvent.v1.topic.any.any.d3.goil.ngde.physicalDeal.pub.main.d3"/>
+                        <queue physicalName="queue.ng_partialDealEvent.v1.topic.any.any.d4.goil.ngde.physicalDeal.pub.main.d4"/>
+                    </forwardTo>
+                </compositeTopic>
+                </virtualDestinations>
+            </virtualDestinationInterceptor>
+        </destinationInterceptors>
 
 
         <!--
@@ -117,7 +134,16 @@
                 (i.e. messageTTL="-1") but create demand subscription only to the next connected
                 broker (i.e. consumerTTL="1"). See AMQ-4607.
             -->
-            <networkConnector name="queueNetworkConnector" userName="admin" password="sunflower" uri="kube://il3-broker-tcp:61616/?transportType=tcp" messageTTL="-1" consumerTTL="1" conduitSubscriptions="false"><dynamicallyIncludedDestinations><queue physicalName=">" /></dynamicallyIncludedDestinations></networkConnector><networkConnector name="topicNetworkConnector" userName="admin" password="sunflower" uri="kube://il3-broker-tcp:61616/?transportType=tcp" messageTTL="-1" consumerTTL="1" conduitSubscriptions="true"><dynamicallyIncludedDestinations><topic physicalName=">" /></dynamicallyIncludedDestinations></networkConnector>
+            <networkConnector name="queueNetworkConnector" userName="admin" password="sunflower" uri="kube://il3-broker-tcp:61616/?transportType=tcp" messageTTL="-1" consumerTTL="1" conduitSubscriptions="false">
+                <dynamicallyIncludedDestinations>
+                    <queue physicalName=">" />
+                </dynamicallyIncludedDestinations>
+            </networkConnector>
+            <networkConnector name="topicNetworkConnector" userName="admin" password="sunflower" uri="kube://il3-broker-tcp:61616/?transportType=tcp" messageTTL="-1" consumerTTL="1" conduitSubscriptions="true">
+                <dynamicallyIncludedDestinations>
+                    <topic physicalName=">" />
+                </dynamicallyIncludedDestinations>
+            </networkConnector>
         </networkConnectors>
 
         <!--
@@ -128,12 +154,22 @@
             http://activemq.apache.org/persistence.html
         -->
 
-        <persistenceAdapter><mKahaDB directory="${activemq.data}/mkahadb"><filteredPersistenceAdapters><filteredKahaDB perDestination="true"><persistenceAdapter><kahaDB journalMaxFileLength="16 mb" enableJournalDiskSyncs="true" checkForCorruptJournalFiles="true"/></persistenceAdapter></filteredKahaDB></filteredPersistenceAdapters></mKahaDB></persistenceAdapter>
+        <persistenceAdapter>
+            <mKahaDB directory="${activemq.data}/mkahadb">
+                <filteredPersistenceAdapters>
+                    <filteredKahaDB perDestination="true">
+                        <persistenceAdapter>
+                            <kahaDB journalMaxFileLength="16 mb" enableJournalDiskSyncs="true" checkForCorruptJournalFiles="true"/>
+                        </persistenceAdapter></filteredKahaDB>
+                </filteredPersistenceAdapters>
+            </mKahaDB>
+        </persistenceAdapter>
 
         <plugins>
-            <jaasAuthenticationPlugin configuration="activemq-ldap" /><authorizationPlugin><map><cachedLDAPAuthorizationMap connectionURL="ldaps://il3-broker-ldaps-service:636" connectionUsername="cn=Manager,dc=bp,dc=com" connectionPassword="secret" queueSearchBase="ou=Queue,ou=Destination,ou=ActiveMQ,dc=activemq,dc=bp,dc=com" topicSearchBase="ou=Topic,ou=Destination,ou=ActiveMQ,dc=activemq,dc=bp,dc=com" tempSearchBase="ou=Temp,ou=Destination,ou=ActiveMQ,dc=activemq,dc=bp,dc=com" refreshInterval="300000" legacyGroupMapping="false"/></map></authorizationPlugin>
+            <!--jaasAuthenticationPlugin configuration="activemq-ldap" /><authorizationPlugin><map><cachedLDAPAuthorizationMap connectionURL="ldaps://il3-broker-ldaps-service:636" connectionUsername="cn=Manager,dc=bp,dc=com" connectionPassword="secret" queueSearchBase="ou=Queue,ou=Destination,ou=ActiveMQ,dc=activemq,dc=bp,dc=com" topicSearchBase="ou=Topic,ou=Destination,ou=ActiveMQ,dc=activemq,dc=bp,dc=com" tempSearchBase="ou=Temp,ou=Destination,ou=ActiveMQ,dc=activemq,dc=bp,dc=com" refreshInterval="300000" legacyGroupMapping="false"/></map></authorizationPlugin>
+            <virtualSelectorCacheBrokerPlugin persistFile="${activemq.data}/selectorCache" persistInterval="900" /-->
 
-            <virtualSelectorCacheBrokerPlugin persistFile="${activemq.data}/selectorCache" persistInterval="900" />
+            <jaasAuthenticationPlugin configuration="activemq" />
         </plugins>
 
         <!--
@@ -165,15 +201,15 @@
         -->
         <transportConnectors>
             <transportConnector name="openwire" uri="tcp://0.0.0.0:61616?maximumConnections=2500&amp;wireFormat.maxFrameSize=104857600" />
-            <transportConnector name="ssl" uri="ssl://0.0.0.0:61617?maximumConnections=2500&amp;wireFormat.maxFrameSize=104857600" />
+            <!--transportConnector name="ssl" uri="ssl://0.0.0.0:61617?maximumConnections=2500&amp;wireFormat.maxFrameSize=104857600" /-->
         </transportConnectors>
 
-        <sslContext>
+        <!--sslContext>
             <sslContext keyStore="file:/etc/amq-secret-volume/broker.ks"
                         keyStorePassword="password"
                         trustStore="file:/etc/amq-secret-volume/broker.ts"
                         trustStorePassword="password" />
-        </sslContext>
+        </sslContext-->
 
         <!-- destroy the spring context on shutdown to stop jetty -->
         <shutdownHooks>
