@@ -1,19 +1,20 @@
 # Demo of JBoss A-MQ (ActiveMQ) on OpenShift using S2I
 
-Configuration of the JBoss A-MQ image can also be modified using the Source-to-image feature, 
-described in full detail at S2I Requirements.
+Configuration of the JBoss A-MQ image can also be modified using the S2I ()Source-to-image) feature.
 
 Custom A-MQ broker configuration can be specified by creating an openshift-activemq.xml file inside 
 the git directory of your application’s Git project root. On each commit, 
 the file will be copied to the conf directory in the A-MQ root and its contents used to configure the broker.
 
-###Create new project (namespace) called Broker:
+##S2I Build OpenShift:
+
+### Create first a new project (namespace) called Broker:
 
 ```
 oc new-project broker
 ```
 
-###S2I Build OpenShift:
+Now let's s2i our conf to the jboss-amq image
 
 ```
 oc new-build registry.access.redhat.com/jboss-amq-6/amq62-openshift:1.3~https://github.com/abouchama/amq62-basic-s2i.git
@@ -38,7 +39,8 @@ oc new-build registry.access.redhat.com/jboss-amq-6/amq62-openshift:1.3~https://
     Build configuration "amq62-basic-s2i" created and build triggered.
     Run 'oc logs -f bc/amq62-basic-s2i' to stream the build progress.
 ```
-To stream the build progress, run 'oc logs -f bc/amq62-basic-s2i':
+To stream the build progress, run 'oc logs -f bc/amq62-basic-s2i',
+You can see here that our conf openshift-activemq.xml has been copied to the image stream:
 
 ```
 $ oc logs -f bc/amq62-basic-s2i
@@ -62,7 +64,7 @@ Pushed 6/7 layers, 94% complete
 Pushed 7/7 layers, 100% complete
 Push successful
 ```
-Let's get now, our image stream:
+Let's get now, our image stream URL:
 
 ```
 $ oc get is
@@ -84,7 +86,7 @@ template "amq62-basic-s2i" created
 ```
 ###create the service account "amq-service-account"
 ```
-oc create -f https://gist.githubusercontent.com/welshstew/08daeeef046aeb3ceb9b8b39c9e0d243/raw/1c9535126b57ab7c8adc4ae0859583c20c25eca9/amq-service-account.json
+oc create -f https://raw.githubusercontent.com/abouchama/amq62-basic-s2i/master/amq-service-account.json
 ```
 
 ###ensure the service account is added to the namespace for view permissions... (for pod scaling)
