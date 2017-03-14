@@ -97,25 +97,6 @@
         </destinationPolicy>
 
 
-        <destinationInterceptors>
-            <virtualDestinationInterceptor>
-                <virtualDestinations>
-                    <virtualTopic name="*.>" prefix="*." postfix=".>" selectorAware="true"/>
-                    <compositeTopic name="ng_physicalDealEvent.v1.topic.any.any.d1">
-                        <forwardTo> <topic physicalName="ng_physicalDealEvent.v1.topic.any.any.d2"/>
-                            <queue physicalName="queue.ng_physicalDealEvent.v1.topic.any.any.d3.goil.ngde.physicalDeal.pub.main.d3"/>
-                            <queue physicalName="queue.ng_physicalDealEvent.v1.topic.any.any.d4.goil.ngde.physicalDeal.pub.main.d4"/>
-                        </forwardTo> </compositeTopic> <compositeTopic name="ng_partialDealEvent.v1.topic.any.any.d1">
-                    <forwardTo>
-                        <queue physicalName="queue.ng_partialDealEvent.v1.topic.any.any.d2.goil.ngde.physicalDeal.pub.main.d2"/>
-                        <queue physicalName="queue.ng_partialDealEvent.v1.topic.any.any.d3.goil.ngde.physicalDeal.pub.main.d3"/>
-                        <queue physicalName="queue.ng_partialDealEvent.v1.topic.any.any.d4.goil.ngde.physicalDeal.pub.main.d4"/>
-                    </forwardTo>
-                </compositeTopic>
-                </virtualDestinations>
-            </virtualDestinationInterceptor>
-        </destinationInterceptors>
-
 
         <!--
             The managementContext is used to configure how ActiveMQ is exposed in
