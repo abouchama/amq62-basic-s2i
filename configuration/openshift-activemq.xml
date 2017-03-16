@@ -51,7 +51,8 @@
         <destinationPolicy>
             <policyMap>
                 <policyEntries>
-                    <policyEntry queue=">" producerFlowControl="true" memoryLimit="2 mb" maxBrowsePageSize="700" useCache="false">
+                    <!--policyEntry queue=">" producerFlowControl="true" memoryLimit="2 mb" maxBrowsePageSize="700" useCache="false"-->
+                    <policyEntry queue=">" producerFlowControl="true" memoryLimit="${AMQ_QUEUE_MEMORY_LIMIT}" maxBrowsePageSize="700" useCache="false">
                         <!--
                             Allow messages to be replayed back to original broker if there is demand.
                             (replayWhenNoConsumers="true").
@@ -168,10 +169,10 @@
                     <memoryUsage percentOfJvmHeap="70" />
                 </memoryUsage>
                 <storeUsage>
-                    <storeUsage limit="650 mb" />
+                    <storeUsage limit="${AMQ_STORAGE_USAGE_LIMIT}" />
                 </storeUsage>
                 <tempUsage>
-                    <tempUsage limit="350 mb" />
+                    <tempUsage limit="${AMQ_TEMP_USAGE_LIMIT}" />
                 </tempUsage>
             </systemUsage>
         </systemUsage>

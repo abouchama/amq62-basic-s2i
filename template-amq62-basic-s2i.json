@@ -64,7 +64,19 @@
         {
             "description": "The A-MQ storage usage limit",
             "name": "AMQ_STORAGE_USAGE_LIMIT",
-            "value": "1 gb",
+            "value": "600 mb",
+            "required": false
+        },
+        {
+            "description": "The A-MQ temp usage limit",
+            "name": "AMQ_TEMP_USAGE_LIMIT",
+            "value": "300 mb",
+            "required": false
+        },
+        {
+            "description": "The Queue memory limit",
+            "name": "AMQ_QUEUE_MEMORY_LIMIT",
+            "value": "2 mb",
             "required": false
         },
         {
@@ -127,7 +139,7 @@
                         "containers": [
                             {
                                 "name": "${APPLICATION_NAME}-amq-a",
-                                "image": "172.30.34.183:5000/broker/amq62-basic-s2i",
+                                "image": "172.30.52.94:5000/broker/amq62-basic-s2i",
                                 "imagePullPolicy": "Always",
                                 "readinessProbe": {
                                     "exec": {
@@ -195,6 +207,14 @@
                                     {
                                         "name": "AMQ_STORAGE_USAGE_LIMIT",
                                         "value": "${AMQ_STORAGE_USAGE_LIMIT}"
+                                    },
+                                    {
+                                        "name": "AMQ_TEMP_USAGE_LIMIT",
+                                        "value": "${AMQ_TEMP_USAGE_LIMIT}"
+                                    },
+                                    {
+                                        "name": "AMQ_QUEUE_MEMORY_LIMIT",
+                                        "value": "${AMQ_QUEUE_MEMORY_LIMIT}"
                                     }
                                 ]
                             }                            
