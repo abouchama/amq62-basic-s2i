@@ -12,12 +12,15 @@ fi
 if [ -d ${SRCLIB} ]; then
   echo "Copying jars from project..."
   cp -v ${SRCLIB}/* $AMQ_HOME/lib/
+  echo "Delete activemq-kahadb-store-5.11.0.redhat-621159.jar from image..."
+  rm $AMQ_HOME/lib/activemq-kahadb-store-5.11.0.redhat-621159.jar
 fi
 
 if [ -d ${SRCBIN} ]; then
   echo "Copying activemq-all from project..."
   chmod +x ${SRCBIN}/*.jar
   cp -v ${SRCBIN}/*.jar $AMQ_HOME/
+  echo "Delete activemq-all-5.11.0.redhat-621159.jar from image..."
 fi
 
 exit 0
