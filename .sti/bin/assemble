@@ -15,11 +15,11 @@ if [ -d ${SRCLIB} ]; then
   cp -v ${SRCLIB}/* $AMQ_HOME/lib/
 fi
 
-if [ -d ${SRCBIN} ]; then
-  echo "Copying json files from project..."
-  chmod +x ${SRCBIN}/*
-  cp -v ${SRCBIN}/* $AMQ_HOME/
-fi
+# if [ -d ${SRCBIN} ]; then
+#  echo "Copying json files from project..."
+#  chmod +x ${SRCBIN}/*
+#  cp -v ${SRCBIN}/* $AMQ_HOME/
+#fi
 
 if [ -d ${SRCPATCH} ]; then
    echo "############ Patch AMQ to 621164 - HF 37 ############"
