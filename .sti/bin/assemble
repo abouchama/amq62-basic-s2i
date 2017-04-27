@@ -12,15 +12,23 @@ fi
 if [ -d ${SRCLIB} ]; then
   echo "Copying jars from project..."
   cp -v ${SRCLIB}/* $AMQ_HOME/lib/
-  echo "Delete activemq-kahadb-store-5.11.0.redhat-621159.jar from image..."
-  rm $AMQ_HOME/lib/activemq-kahadb-store-5.11.0.redhat-621159.jar
 fi
 
 if [ -d ${SRCBIN} ]; then
   echo "Copying activemq-all from project..."
-  chmod +x ${SRCBIN}/*.jar
-  cp -v ${SRCBIN}/*.jar $AMQ_HOME/
-  echo "Delete activemq-all-5.11.0.redhat-621159.jar from image..."
+  chmod +x ${SRCBIN}/*
+  cp -v ${SRCBIN}/* $AMQ_HOME/
 fi
+
+echo "Patch AMQ to 621164 - HF 37"
+
+curl -o $AMQ_HOME/lib/activemq-kahadb-store-5.11.0.redhat-621164.jar https://repository.jboss.org/nexus/content/groups/ea/org/apache/activemq/activemq-all/activemq-all-5.11.0.redhat-621159.jar
+curl -o $AMQ_HOME/lib/activemq-kahadb-store-5.11.0.redhat-621164.jar https://repository.jboss.org/nexus/content/groups/ea/org/apache/activemq/activemq-all/activemq-all-5.11.0.redhat-621159.jar
+
+echo "Delete activemq-kahadb-store-5.11.0.redhat-621159.jar from image..."
+rm $AMQ_HOME/lib/activemq-kahadb-store-5.11.0.redhat-621159.jar
+
+echo "Delete activemq-all-5.11.0.redhat-621159.jar from image..."
+rm $AMQ_HOME/activemq-all-5.11.0.redhat-621159.jar
 
 exit 0
