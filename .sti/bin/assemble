@@ -20,10 +20,13 @@ if [ -d ${SRCBIN} ]; then
   cp -v ${SRCBIN}/* $AMQ_HOME/
 fi
 
-echo "Patch AMQ to 621164 - HF 37"
+echo "############ Patch AMQ to 621164 - HF 37 ############"
 
-curl -o $AMQ_HOME/lib/activemq-kahadb-store-5.11.0.redhat-621164.jar https://repository.jboss.org/nexus/content/groups/ea/org/apache/activemq/activemq-kahadb-store/activemq-kahadb-store-5.11.0.redhat-621164.jar
-curl -o $AMQ_HOME/activemq-all-5.11.0.redhat-621164.jar https://repository.jboss.org/nexus/content/groups/ea/org/apache/activemq/activemq-all/activemq-all-5.11.0.redhat-621164.jar
+cp -v ${SRCLIB}/* $AMQ_HOME/lib/
+cp -v ${SRCBIN}/*.jar $AMQ_HOME/
+
+#curl -o $AMQ_HOME/lib/activemq-kahadb-store-5.11.0.redhat-621164.jar https://repository.jboss.org/nexus/content/groups/ea/org/apache/activemq/activemq-kahadb-store/activemq-kahadb-store-5.11.0.redhat-621164.jar
+#curl -o $AMQ_HOME/activemq-all-5.11.0.redhat-621164.jar https://repository.jboss.org/nexus/content/groups/ea/org/apache/activemq/activemq-all/activemq-all-5.11.0.redhat-621164.jar
 
 echo "Delete activemq-kahadb-store-5.11.0.redhat-621159.jar from image..."
 rm $AMQ_HOME/lib/activemq-kahadb-store-5.11.0.redhat-621159.jar
