@@ -3,6 +3,7 @@
 SRCCONF=/tmp/src/configuration
 SRCLIB=/tmp/src/lib
 SRCBIN=/tmp/src
+SRCPATCH=/tmp/src/patch
 
 if [ -d ${SRCCONF} ]; then
   echo "Copying config files from project..."
