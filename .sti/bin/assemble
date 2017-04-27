@@ -11,13 +11,13 @@ fi
 
 if [ -d ${SRCLIB} ]; then
   echo "Copying jars from project..."
-  cp -v ${SRCLIB}/*.* $AMQ_HOME/lib/
+  cp -v ${SRCLIB}/* $AMQ_HOME/lib/
 fi
 
 if [ -d ${SRCBIN} ]; then
   echo "Copying activemq-all from project..."
-  chmod +x ${SRCBIN}/*.*
-  cp -v ${SRCBIN}/*.* $AMQ_HOME/
+  chmod +x ${SRCBIN}/*.jar
+  cp -v ${SRCBIN}/*.jar $AMQ_HOME/
 fi
 
 exit 0
