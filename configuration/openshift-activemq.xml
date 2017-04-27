@@ -42,8 +42,6 @@
     <!--broker xmlns="http://activemq.apache.org/schema/core" brokerName="${HOSTNAME}" dataDirectory="${activemq.data}" schedulePeriodForDestinationPurge="10000"-->
     <broker xmlns="http://activemq.apache.org/schema/core" brokerName="${HOSTNAME}" dataDirectory="${activemq.data}">
 
-        <!-- ##### DESTINATIONS ##### -->
-
         <destinations>
             <queue physicalName="USERS.TEST.QUEUE" />
             <queue physicalName="USERS.PROD.QUEUE" />
@@ -111,25 +109,18 @@
             <managementContext createConnector="false" />
         </managementContext>
 
-        <networkConnectors>
-            <!--
-                In a full mesh we want messages to travel freely to any broker
-                (i.e. messageTTL="-1") but create demand subscription only to the next connected
-                broker (i.e. consumerTTL="1"). See AMQ-4607.
-            -->
+        <!--networkConnectors>
             <networkConnector name="queueNetworkConnector" userName="admin" password="sunflower" uri="kube://broker-amq-tcp:61616/?transportType=tcp" messageTTL="-1" consumerTTL="1" conduitSubscriptions="false">
-            <!--networkConnector name="queueNetworkConnector" userName="admin" password="sunflower" uri="kube://il3-broker-tcp:61616/?transportType=tcp" messageTTL="-1" consumerTTL="1" conduitSubscriptions="false"-->
                 <dynamicallyIncludedDestinations>
                     <queue physicalName=">" />
                 </dynamicallyIncludedDestinations>
             </networkConnector>
             <networkConnector name="topicNetworkConnector" userName="admin" password="sunflower" uri="kube://broker-amq-tcp:61616/?transportType=tcp" messageTTL="-1" consumerTTL="1" conduitSubscriptions="true">
-            <!--networkConnector name="topicNetworkConnector" userName="admin" password="sunflower" uri="kube://il3-broker-tcp:61616/?transportType=tcp" messageTTL="-1" consumerTTL="1" conduitSubscriptions="true"-->
                 <dynamicallyIncludedDestinations>
                     <topic physicalName=">" />
                 </dynamicallyIncludedDestinations>
             </networkConnector>
-        </networkConnectors>
+        </networkConnectors-->
 
         <!--
             Configure message persistence for the broker. The default persistence
