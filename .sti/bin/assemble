@@ -10,10 +10,10 @@ if [ -d ${SRCCONF} ]; then
   cp -v ${SRCCONF}/* $AMQ_HOME/conf/
 fi
 
-if [ -d ${SRCLIB} ]; then
-  echo "Copying jars from project..."
-  cp -v ${SRCLIB}/* $AMQ_HOME/lib/
-fi
+# if [ -d ${SRCLIB} ]; then
+#  echo "Copying jars from project..."
+#  cp -v ${SRCLIB}/* $AMQ_HOME/lib/
+#fi
 
 # if [ -d ${SRCBIN} ]; then
 #  echo "Copying json files from project..."
