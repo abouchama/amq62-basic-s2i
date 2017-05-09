@@ -21,24 +21,24 @@ fi
 #  cp -v ${SRCBIN}/* $AMQ_HOME/
 #fi
 
-if [ -d ${SRCPATCH} ]; then
-   echo "############ Patch AMQ to 621164 - HF 37 ############"
-  chmod +x ${SRCPATCH}/*
-  chmod +x ${SRCPATCH}/lib/*
+#if [ -d ${SRCPATCH} ]; then
+#   echo "############ Patch AMQ to 621164 - HF 37 ############"
+#  chmod +x ${SRCPATCH}/*
+#  chmod +x ${SRCPATCH}/lib/*
 
-  cp -v ${SRCPATCH}/lib/* $AMQ_HOME/lib/
-  cp -v ${SRCPATCH}/*.jar $AMQ_HOME/
+#  cp -v ${SRCPATCH}/lib/* $AMQ_HOME/lib/
+#  cp -v ${SRCPATCH}/*.jar $AMQ_HOME/
 
   #curl -o $AMQ_HOME/lib/activemq-kahadb-store-5.11.0.redhat-621164.jar https://repository.jboss.org/nexus/content/groups/ea/org/apache/activemq/activemq-kahadb-store/activemq-kahadb-store-5.11.0.redhat-621164.jar
   #curl -o $AMQ_HOME/activemq-all-5.11.0.redhat-621164.jar https://repository.jboss.org/nexus/content/groups/ea/org/apache/activemq/activemq-all/activemq-all-5.11.0.redhat-621164.jar
 
-  echo "Delete activemq-kahadb-store-5.11.0.redhat-621159.jar from image..."
-  rm $AMQ_HOME/lib/activemq-kahadb-store-5.11.0.redhat-621159.jar
+#  echo "Delete activemq-kahadb-store-5.11.0.redhat-621159.jar from image..."
+#  rm $AMQ_HOME/lib/activemq-kahadb-store-5.11.0.redhat-621159.jar
 
-  echo "Delete activemq-all-5.11.0.redhat-621159.jar from image..."
-  rm $AMQ_HOME/activemq-all-5.11.0.redhat-621159.jar
+#  echo "Delete activemq-all-5.11.0.redhat-621159.jar from image..."
+#  rm $AMQ_HOME/activemq-all-5.11.0.redhat-621159.jar
 
-  echo "############ End - Patch AMQ to 621164 - HF 37 ############"
-fi
+#  echo "############ End - Patch AMQ to 621164 - HF 37 ############"
+#fi
 
 exit 0
