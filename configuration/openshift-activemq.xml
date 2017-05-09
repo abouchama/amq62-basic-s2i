@@ -51,7 +51,7 @@
             <policyMap>
                 <policyEntries>
                     <!--policyEntry queue=">" producerFlowControl="true" memoryLimit="2 mb" maxBrowsePageSize="700" useCache="false"-->
-                    <policyEntry queue=">" producerFlowControl="true" memoryLimit="${AMQ_QUEUE_MEMORY_LIMIT}" maxBrowsePageSize="700" useCache="false">
+                    <policyEntry queue=">" producerFlowControl="true" memoryLimit="10mb" useCache="false">
                         <!--
                             Allow messages to be replayed back to original broker if there is demand.
                             (replayWhenNoConsumers="true").
@@ -131,6 +131,22 @@
         -->
 
         <persistenceAdapter>
+            <mKahaDB directory="${activemq.data}/kahadb">
+            <filteredPersistenceAdapters>
+                <filteredKahaDB queue="ActiveMQ.DLQ">
+                    <persistenceAdapter>
+                    <kahaDB journalMaxFileLength="32mb" enableJournalDiskSyncs="false" checkForCorruptJournalFiles="true"/>
+                    </persistenceAdapter>
+                </filteredKahaDB>
+                <filteredKahaDB>
+                    <persistenceAdapter>
+                        <kahaDB journalMaxFileLength="16 mb" enableJournalDiskSyncs="true" checkForCorruptJournalFiles="true"/>
+                    </persistenceAdapter>
+                </filteredKahaDB>
+                </filteredPersistenceAdapters>
+            </mKahaDB>
+        </persistenceAdapter>
+        <!--persistenceAdapter>
             <mKahaDB directory="${activemq.data}/mkahadb">
                 <filteredPersistenceAdapters>
                     <filteredKahaDB perDestination="true">
@@ -139,7 +155,7 @@
                         </persistenceAdapter></filteredKahaDB>
                 </filteredPersistenceAdapters>
             </mKahaDB>
-        </persistenceAdapter>
+        </persistenceAdapter-->
 
         <plugins>
             <!--jaasAuthenticationPlugin configuration="activemq-ldap" /><authorizationPlugin><map><cachedLDAPAuthorizationMap connectionURL="ldaps://il3-broker-ldaps-service:636" connectionUsername="cn=Manager,dc=bp,dc=com" connectionPassword="secret" queueSearchBase="ou=Queue,ou=Destination,ou=ActiveMQ,dc=activemq,dc=bp,dc=com" topicSearchBase="ou=Topic,ou=Destination,ou=ActiveMQ,dc=activemq,dc=bp,dc=com" tempSearchBase="ou=Temp,ou=Destination,ou=ActiveMQ,dc=activemq,dc=bp,dc=com" refreshInterval="300000" legacyGroupMapping="false"/></map></authorizationPlugin>
