@@ -13,10 +13,10 @@
             "template.openshift.io/documentation-url": "https://access.redhat.com/documentation/en/red-hat-jboss-amq/",
             "template.openshift.io/support-url": "https://access.redhat.com"
         },
-        "name": "amq63-persistent"
+        "name": "amq63-persistent-s2i"
     },
     "labels": {
-        "template": "amq63-persistent-s2i",
+        "template": "amq63-persistent",
         "xpaas": "1.4.15"
     },
     "message": "A new persistent messaging service has been created in your project. It will handle the protocol(s) \"${MQ_PROTOCOL}\". The username/password for accessing the service is ${MQ_USERNAME}/${MQ_PASSWORD}.",
