@@ -291,7 +291,7 @@
                         "containers": [
                             {
                                 "name": "${APPLICATION_NAME}-amq",
-                                "image": "jboss-amq-63",
+                                "image": "172.30.1.1:5000/amq6/amq62-basic-s2i",
                                 "imagePullPolicy": "Always",
                                 "volumeMounts": [
                                     {
