@@ -16,7 +16,7 @@
         "name": "amq63-persistent"
     },
     "labels": {
-        "template": "amq63-persistent",
+        "template": "amq63-persistent-s2i",
         "xpaas": "1.4.15"
     },
     "message": "A new persistent messaging service has been created in your project. It will handle the protocol(s) \"${MQ_PROTOCOL}\". The username/password for accessing the service is ${MQ_USERNAME}/${MQ_PASSWORD}.",
