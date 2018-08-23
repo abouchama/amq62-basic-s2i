@@ -257,20 +257,6 @@
                 },
                 "triggers": [
                     {
-                        "type": "ImageChange",
-                        "imageChangeParams": {
-                            "automatic": true,
-                            "containerNames": [
-                                "${APPLICATION_NAME}-amq"
-                            ],
-                            "from": {
-                                "kind": "ImageStreamTag",
-                                "namespace": "${IMAGE_STREAM_NAMESPACE}",
-                                "name": "jboss-amq-63:1.4"
-                            }
-                        }
-                    },
-                    {
                         "type": "ConfigChange"
                     }
                 ],
@@ -418,20 +404,6 @@
                 },
                 "triggers": [
                     {
-                        "type": "ImageChange",
-                        "imageChangeParams": {
-                            "automatic": true,
-                            "containerNames": [
-                                "${APPLICATION_NAME}-drainer"
-                            ],
-                            "from": {
-                                "kind": "ImageStreamTag",
-                                "namespace": "${IMAGE_STREAM_NAMESPACE}",
-                                "name": "jboss-amq-63:1.4"
-                            }
-                        }
-                    },
-                    {
                         "type": "ConfigChange"
                     }
                 ],
@@ -452,7 +424,7 @@
                         "containers": [
                             {
                                 "name": "${APPLICATION_NAME}-drainer",
-                                "image": "jboss-amq-63",
+                                "image": "172.30.1.1:5000/amq6/amq62-basic-s2i",
                                 "command": [
                                     "/opt/amq/bin/drain.sh"
                                 ],
