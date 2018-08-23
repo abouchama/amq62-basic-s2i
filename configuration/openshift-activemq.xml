@@ -181,7 +181,7 @@
                     <storeUsage limit="${AMQ_STORAGE_USAGE_LIMIT}" />
                 </storeUsage>
                 <tempUsage>
-                    <tempUsage limit="${AMQ_TEMP_USAGE_LIMIT}" />
+                    <tempUsage limit="50 gb" />
                 </tempUsage>
             </systemUsage>
         </systemUsage>
