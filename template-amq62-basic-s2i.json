@@ -139,7 +139,7 @@
                         "containers": [
                             {
                                 "name": "${APPLICATION_NAME}-amq-a",
-                                "image": "172.30.52.94:5000/broker/amq62-basic-s2i",
+                                "image": "docker-registry.default.svc:5000/amq/msp-amq",
                                 "imagePullPolicy": "Always",
                                 "readinessProbe": {
                                     "exec": {
